@@ -1,0 +1,7 @@
+from pymongo import MongoClient
+import certifi
+
+ca=certifi.where()
+
+client = MongoClient('mongodb+srv://jwchoi:jwchoi@cluster0.etdnidi.mongodb.net/?retryWrites=true&w=majority', tlsCAFile=ca)
+db = client.sparta
