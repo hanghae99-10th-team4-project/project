@@ -67,10 +67,12 @@
 
 </style>
 <script>
-/*    $(document).ready(function () {
+    let post_id_receive = sessionStorage.getItem("post_id")
+    console.log(post_id_receive)
+    $(document).ready(function () {
         show_review();
     })
-    let post_id_receive = sessionStorage.getItem("post_id")
+
     function show_review() {
         $('#review').empty()
         $.ajax({
@@ -78,7 +80,7 @@
             url: "/api/walk",
             data: {},
             success: function (response) {
-                let rows = response['walk']
+                let rows = response['review']
 
                 for( i=0; i < rows.length; i++) {
                     post_id = rows[i]['post_id']
@@ -109,10 +111,10 @@
             }
         })
     }
-*/
+
     function save_comment() {
         let comment = $('comment').val()
-        let post_id = 1
+        let post_id = post_id_receive
         let star = $('star').val()
 
         $.ajax({
