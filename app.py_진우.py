@@ -46,6 +46,9 @@ def login():
     msg = request.args.get("msg")
     return render_template('login.html', msg=msg)
 
+@app.route('/api/main')
+def main():
+    return render_template('index.html')
 
 @app.route('/signup')
 def register():
