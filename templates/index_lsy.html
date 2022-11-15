@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta property="og:title" content="허니-문 - 신혼여행지 추천서비스"/>
+    <meta property="og:description" content="신혼여행, 어디로갈까 고민하지마세요"/>
+    <meta property="og:image"
+          content="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjA4MTZfMjM1%2FMDAxNjYwNjQ5ODEwMDEx.JSTD706sdxpe_5hdDetzane_SUXqloMB-xdBw9yALZQg.RCgEbVp6oU8M8iS1qY-MRSOVECziJJLRtjWiWeZz5CQg.JPEG.hhye12345%2FIMG%25A3%25DF20220816%25A3%25DF202705.jpg&type=sc960_832"/>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+
+    <title>나만의 산책길</title>
+</head>
+<style>
+
+    .mypic {
+        width: 100%;
+        height: 400px;
+
+        background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjEwMTBfMjY1%2FMDAxNjY1MzcxMzgyNTg2.KLAe4Vm5xndozo1MOkH13U4LW-yjK9Lo8cpkEsa-r7Ag.On8c83cVpaf2qQQ9Eeqk-Fd1VKceNUZ64Way5LhPyHkg.JPEG.shinae90%2F20220920%25A3%25DF135146.jpg&type=sc960_832');
+        background-position: center 50%;
+        background-size: cover;
+
+        color: white;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .review {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+
+    }
+
+    .card {
+        margin-top: 50px;
+    }
+
+    .star_box {
+        width: 50rem;
+
+    }
+
+    .comment_input {
+        margin-top: 15px;
+        width: 50rem;
+    }
+
+    .comment_input>button {
+        margin-top: 10px;
+
+    }
+
+</style>
+<script>
+/*    $(document).ready(function () {
+        show_review();
+    })
+    let post_id_receive = sessionStorage.getItem("post_id")
+    function show_review() {
+        $('#review').empty()
+        $.ajax({
+            type: "GET",
+            url: "/api/walk",
+            data: {},
+            success: function (response) {
+                let rows = response['walk']
+
+                for( i=0; i < rows.length; i++) {
+                    post_id = rows[i]['post_id']
+                    user_id = rows[i]['user_id']
+                    title = rows[i]['title']
+                    review = rows[i]['review']
+                    img = rows[i]['img']
+                    category = rows[i]['category']
+                    comment_id = rows[i]['comment_id']
+                    comment = rows[i]['comment']
+                    star = rows[i]['star']
+
+                    if(post_id == post_id_receive) {
+                    let temp_html = `<div class="card" style="width: 50rem;">
+                                        <div class="card-header">
+                                            제목  ${title}
+                                        </div>
+                                        <ul class="list-group list-group-flush">
+                                            <img class="list-group-item" src="${img}" alt="리뷰이미지"></img>
+                                            <li class="list-group-item">설명
+                                            <p>${review}</p>
+                                            </li>
+                                        </ul>
+                                    </div>`
+                    $('#review').append(temp_html)
+                    }
+                }
+            }
+        })
+    }
+*/
+    function save_comment() {
+        let comment = $('comment').val()
+        let post_id = 1
+        let star = $('star').val()
+        console.log("안녕")
+        $.ajax({
+            type: "POST",
+            url: "/api/walk/comment",
+            data: {post_id:post_id, comment_give: comment, star: star},
+            success: function (response) {
+                alert(response["msg"])
+                window.location.reload()
+            }
+        })
+    }
+
+
+</script>
+<body>
+    <div class="mypic">
+        <h1>나만의 산책길</h1>
+        <h5>나만 아는 우리동네 산책길</h5>
+    </div>
+    <div id="review" class="review">
+        <div class="card" style="width: 50rem;">
+            <div class="card-header">
+                제목
+            </div>
+            <ul class="list-group list-group-flush">
+                <img class="list-group-item" src="..." alt="리뷰이미지"></img>
+                <li class="list-group-item">설명
+                <p>여기에 내용이 들어갑니다</p>
+                </li>
+            </ul>
+        </div>
+    <div class="star_box">
+        <div class="input-group mb-3">
+        <label class="input-group-text" for="inputGroupSelect01">별점</label>
+        <select class="form-select" id="star">
+            <option selected>-- 선택하기 --</option>
+            <option value="1">⭐</option>
+            <option value="2">⭐⭐</option>
+            <option value="3">⭐⭐⭐</option>
+            <option value="4">⭐⭐⭐⭐</option>
+            <option value="5">⭐⭐⭐⭐⭐</option>
+        </select>
+        </div>
+    </div>
+    <div class="comment_input">
+        <input id="comment" class="form-control" type="text" placeholder="댓글을 달아주세요">
+        <button onclick="save_comment()" type="button" class="btn btn-outline-primary">등록</button>
+    </div>
+</div>
+
+</body>
+</html>
