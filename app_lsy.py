@@ -13,17 +13,17 @@ db = client.sparta
 def home():
     return render_template('index.html')
 
-@app.route('/index_lsy')
-def home_lsy():
+@app.route('/review_page')
+def home_review_page():
     return render_template('review_page.html')
 
-@app.route("/api/walk", methods=["GET"]) #walk doc 가져오기
+@app.route("/api/walk", methods=["GET"]) #walk db 가져오기
 def review_get():
     review_give = list(db.walk.find({},{'_id':False}))
 
     return jsonify({'review': review_give})
 
-@app.route("/api/walk/comment", methods=["GET"]) #walk doc 가져오기
+@app.route("/api/walk/comment", methods=["GET"]) #comment db 가져오기
 def comment_get():
 
     comment_give = list(db.walk_comment.find({},{'_id':False}))
@@ -33,12 +33,16 @@ def comment_get():
 @app.route("/api/walk/comment", methods=["POST"]) #코멘트 저장하기
 def comment_post():
     post_id_receive = request.form['post_id']
-    user_id_receive = request.form['user_id']
     comment_receive = request.form['comment_give']
     star_receive = request.form['star']
 
     comment_list = list(db.walk_comment.find({},{'_id': False}))
     count = len(comment_list) + 1
+
+    token_receive = request.cookies.get('mytoken')
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        user_id_receive = db.member.find_one({"user_id": payload['id']})
 
     doc = {
         'post_id' :post_id_receive,
