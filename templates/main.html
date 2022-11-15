@@ -101,7 +101,7 @@
                 url: '/api/walk',
                 data: {},
                 success: function (response) {
-                    let rows = response['walks']
+                    let rows = response['review']
                     for (let i = 0; i < rows.length; i++) {
                         let post_id = rows[i]['post_id']
                         let title = rows[i]['title']
