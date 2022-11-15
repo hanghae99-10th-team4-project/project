@@ -5,3 +5,10 @@ ca=certifi.where()
 
 client = MongoClient('mongodb+srv://jwchoi:jwchoi@cluster0.etdnidi.mongodb.net/?retryWrites=true&w=majority', tlsCAFile=ca)
 db = client.sparta
+
+------------------------------------------------------
+
+function show_review(post_id){
+            let post_id_receive =  post_id
+            sessionStorage.setItem("post_id", post_id_receive);
+            location.href='/review_page';
