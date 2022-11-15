@@ -31,7 +31,7 @@
           div.left {
               width: 70%;
               float: left;
-              background-image: url("https://image.utoimage.com/preview/cp872722/2022/03/202210020501_500.jpg");
+              background-image: url("https://img.freepik.com/premium-vector/man-with-dog-walking-in-park_212168-776.jpg?w=1800");
               background-position: center;
               background-size: cover;
 
@@ -62,6 +62,7 @@
 
 
       <script>
+          let count=0;
           // 로그아웃은 내가 가지고 있는 토큰만 쿠키에서 없애면 됩니다.
             // 간단한 회원가입 함수입니다.
             // 아이디, 비밀번호, 닉네임을 받아 DB에 저장합니다.
@@ -69,11 +70,13 @@
                 let userid=$('#user_id').val()
                 let passwd=$('#passwd').val()
                 let chk_passwd=$('#check_passwd').val()
-                console.log(passwd, userid)
 
                 if(userid=="" || passwd=="" || userid==null || passwd==null) {
                     alert('ID/PASSWORD를 입력해주세요!')
+                } else if (count == 0) {
+                    alert('ID 중복확인을 해주세요')
                 } else {
+                    count=0
                     if (passwd == chk_passwd) {
                         $.ajax({
                             type: "POST",
@@ -110,9 +113,11 @@
                     success: function (response) {
                         if (response['check_user'] == 'fail') {
                             alert('이 아이디는 사용 불가능 합니다.')
+                            count=0;
                             $('#user_id').val('')
                         } else if (response['check_user'] == 'success') {
                             alert('이 아이디는 사용 가능 합니다.')
+                            count++;
                         }
                         }
                 })
