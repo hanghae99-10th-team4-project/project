@@ -66,30 +66,38 @@
             // 간단한 회원가입 함수입니다.
             // 아이디, 비밀번호, 닉네임을 받아 DB에 저장합니다.
             function signup() {
+                let userid=$('#user_id').val()
                 let passwd=$('#passwd').val()
                 let chk_passwd=$('#check_passwd').val()
-                console.log(passwd, chk_passwd)
+                console.log(passwd, userid)
 
-                if (passwd==chk_passwd) {
-                    $.ajax({
-                        type: "POST",
-                        url: "/api/member/signup",
-                        data: {
-                            id_give: $('#user_id').val(),
-                            pw_give: $('#passwd').val(),
-                        },
-                        success: function (response) {
-                            if (response['result'] == 'success') {
-                                alert('회원가입이 완료되었습니다.')
-                                window.location.href = '/api/member'
-                            } else {
-                                alert(response['msg'])
-                            }
-                        }
-                    })
+                if(userid=="" || passwd=="" || userid==null || passwd==null) {
+                    alert('ID/PASSWORD를 입력해주세요!')
                 } else {
-                    alert("패스워드를 다시 확인해주세요.")
+                    if (passwd == chk_passwd) {
+                        $.ajax({
+                            type: "POST",
+                            url: "/api/member/signup",
+                            data: {
+                                id_give: $('#user_id').val(),
+                                pw_give: $('#passwd').val(),
+                            },
+                            success: function (response) {
+                                if (response['result'] == 'success') {
+                                    alert('회원가입이 완료되었습니다.')
+                                    window.location.href = '/api/member'
+                                } else {
+                                    alert(response['msg'])
+                                }
+                            }
+                        })
+                    } else {
+                        alert("패스워드를 다시 확인해주세요.")
+                    }
+
                 }
+
+
             }
 
             function checkid() {
