@@ -123,25 +123,18 @@
                 }
             })
         }
-        function show_review(post_id){
-            $.ajax({
-                type: 'GET',
-                url: '/api/walk',
-                data: {},
-                success: function (response) {
-                    let rows = response['walks']
-                    let post_id =  rows[i]['post_id']
-
-                    location.href=""
-                }
-            })
+        function show_review(post_id) {
+            let post_id_receive = post_id
+            sessionStorage.setItem("post_id", post_id_receive);
+            location.href = '/review_page';
         }
+
         // 로그아웃은 내가 가지고 있는 토큰만 쿠키에서 없애면 됩니다.
-      function logout(){
-        $.removeCookie('mytoken', {path:'/api'});
-        alert('로그아웃!')
-        window.location.href='/api/member'
-      }
+        function logout() {
+            $.removeCookie('mytoken', {path: '/api'});
+            alert('로그아웃!')
+            window.location.href = '/api/member'
+        }
     </script>
 </head>
 <body>
@@ -155,9 +148,9 @@
         <h6> 나만의 동네산책길을 공유하세요</h6>
     </div>
 </header>
-<div class="button" onclick()="">
+<div class="button">
     <button type="button" class="btn btn-danger">
-        <a href="">내길 자랑하러가기</a>
+        <a href="/api/walk">내길 자랑하러가기</a>
     </button>
 </div>
 <div class="mycards">
