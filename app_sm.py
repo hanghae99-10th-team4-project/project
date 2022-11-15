@@ -78,10 +78,7 @@ def api_register():
 @app.route("/api/walk", methods=["GET"]) #walk db 가져오기
 def review_get():
     review_give = list(db.walk.find({},{'_id':False}))
-
     return jsonify({'review': review_give})
-
-@app.route
 
 @app.route('/api/member/signup/checkid', methods=['POST'])
 def check_id():
