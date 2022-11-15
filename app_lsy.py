@@ -114,13 +114,6 @@ def api_login():
     else:
         return jsonify({'result': 'fail', 'msg': '아이디/비밀번호가 일치하지 않습니다.'})
 
-
-"""
-@app.route('/')
-def home():
-    return render_template('index.html')
-    """
-
 @app.route('/review_page')
 def home_review_page():
     return render_template('review_page.html')
