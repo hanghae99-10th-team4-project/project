@@ -20,14 +20,16 @@
     <title>나만의 산책길</title>
 </head>
 <style>
-    *{
+    * {
         font-family: 'Do Hyeon', sans-serif;
     }
-    a{
-        color:white;
+
+    a {
+        color: white;
         text-decoration: none;
     }
-    header{
+
+    header {
         width: 100%;
         height: 500px;
 
@@ -37,26 +39,29 @@
 
         color: white;
     }
-    nav{
-        width:100%;
+
+    nav {
+        width: 100%;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
     }
-    nav>p{
-        width:15%;
+
+    nav > p {
+        width: 15%;
         display: block;
         text-align: center;
-        padding-top:0.5%;
+        padding-top: 0.5%;
 
     }
-    .cover{
+
+    .cover {
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
 
-        margin-top:200px;
+        margin-top: 200px;
     }
 
     .review {
@@ -65,24 +70,34 @@
         align-items: center;
         justify-content: center;
 
-
     }
 
     .card {
         margin-top: 50px;
     }
 
+    .edit_btn {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+    }
+
+    .edit_btn > button {
+        margin: 5px 5px 5px 5px;
+    }
+
     .star_box {
+        margin-top: 10px;
         width: 50rem;
 
     }
 
     .comment_input {
-        margin-top: 15px;
+        margin-top: 5px;
         width: 50rem;
     }
 
-    .comment_input>button {
+    .comment_input > button {
         margin-top: 10px;
 
     }
@@ -91,135 +106,152 @@
 <script>
     let post_id_receive = sessionStorage.getItem("post_id")
     console.log(post_id_receive)
-/*    $(document).ready(function () {
-        show_review();
+    $(document).ready(function () {
+        /* show_review(); */
         show_comment();
     })
 
-    function show_review() {
-        $('#review').empty()
-        $.ajax({
-            type: "GET",
-            url: "/api/walk",
-            data: {},
-            success: function (response) {
-                let rows = response['review']
+    /*
+        function show_review() {
+            $('#review').empty()
+            $.ajax({
+                type: "GET",
+                url: "/api/walk",
+                data: {},
+                success: function (response) {
+                    let rows = response['review']
 
-                for( i=0; i < rows.length; i++) {
-                    post_id = rows[i]['post_id']
-                    user_id = rows[i]['user_id']
-                    title = rows[i]['title']
-                    review = rows[i]['review']
-                    img = rows[i]['img']
-                    category = rows[i]['category']
+                    for( i=0; i < rows.length; i++) {
+                        post_id = rows[i]['post_id']
+                        user_id = rows[i]['user_id']
+                        title = rows[i]['title']
+                        review = rows[i]['review']
+                        img = rows[i]['img']
+                        category = rows[i]['category']
 
 
-                    if(post_id == post_id_receive) {
-                    let temp_html = `<div class="card" style="width: 50rem;">
-                                        <div class="card-header">
-                                            제목  ${title}
-                                        </div>
-                                        <ul class="list-group list-group-flush">
-                                            <img class="list-group-item" src="${img}" alt="리뷰이미지"></img>
-                                            <li class="list-group-item">설명
-                                            <p>${review}</p>
-                                            </li>
-                                        </ul>
-                                    </div>`
-                    $('#review').append(temp_html)
+                        if(post_id == post_id_receive) {
+                        let temp_html = `<div class="card" style="width: 50rem;">
+                                            <div class="card-header">
+                                                제목  ${title}
+                                            </div>
+                                            <ul class="list-group list-group-flush">
+                                                <img class="list-group-item" src="${img}" alt="리뷰이미지"></img>
+                                                <li class="list-group-item">설명
+                                                <p>${review}</p>
+                                                </li>
+                                            </ul>
+                                        </div>`
+                        $('#review').append(temp_html)
+                        }
                     }
                 }
-            }
-        })
-    }
+            })
+        }
+
+     */
     function show_comment() {
-        $('#saved_comment').empty()
+        //$('#saved_comment').empty()
         $.ajax({
             type: "GET",
             url: "/api/walk/comment",
             data: {},
             success: function (response) {
-                let rows = response['comment']
+                let rows = response['comments']
+                console.log(rows)
+                for (let i = 0; i < rows.length; i++) {
+                    let post_id = rows[i]['post_id']
+                    let user_id = rows[i]['user_id']
+                    let comment_id = rows[i]['comment_id']
+                    let comment = rows[i]['comment']
+                    let star = rows[i]['star']
+                    let star_image = '⭐'.repeat(star)
 
-                for( i=0; i < rows.length; i++) {
-                    post_id = rows[i]['post_id']
-                    user_id = rows[i]['user_id']
-                    comment_id = rows[i]['comment_id']
-                    comment = rows[i]['comment']
-                    star = rows[i]['star']
-
-                    if(post_id == post_id_receive){
+                    if (post_id == post_id_receive) {
                         let temp_html = `<div id="saved_comment" class="card" style="width: 50rem;">
-                                            <p>${user_id}</p>
-                                            <p>${star}</p>
-                                            <p>${comment}</p>
+                                            <div class="card-header">${user_id} ${star_image}</div>
+                                            <div class="card-body">
+                                                <h6>${comment}</h6>
+                                            </div>
                                         </div>`
                         $('#saved_comment').append(temp_html)
                     }
                 }
-
-
             }
         })
     }
-*/
+
     function save_comment() {
-        let comment = $('comment').val()
+        let comment = $('#comment').val()
         let post_id = post_id_receive
-        let star = $('star').val()
-
-        $.ajax({
-            type: "POST",
-            url: "/api/walk/comment",
-            data: {post_id:post_id, comment_give: comment, star: star},
-            success: function (response) {
-                alert(response["msg"])
-                window.location.reload()
-            }
-        })
+        let star = $('#star').val()
+        if (star == "선택하기") {
+            alert('별점을 선택해주세요')
+        } else if (comment == "") {
+            alert('댓글을 입력해주세요')
+        } else {
+            $.ajax({
+                type: "POST",
+                url: "/api/walk/comment",
+                data: {post_id: post_id, comment_give: comment, star: star},
+                success: function (response) {
+                    alert(response["msg"])
+                    window.location.reload()
+                }
+            })
+        }
     }
 
+    function update_btn() {
+
+    }
+
+    function delete_btn() {
+
+    }
 
 </script>
 <body>
 <header>
     <nav>
         <p class="home"><a href="/api/main">WALK</a></p>
-        <p class="logout"  onclick="logout()"> LOGOUT</p>
+        <p class="logout" onclick="logout()"> LOGOUT</p>
     </nav>
     <div class="cover">
         <h1>동네길</h1>
         <h6> 나만의 동네산책길을 공유하세요</h6>
     </div>
 </header>
-    <div id="review" class="review">
-        <div class="card" style="width: 50rem;">
-            <div class="card-header">
-                제목
-            </div>
-            <ul class="list-group list-group-flush">
-                <img class="list-group-item" src="..." alt="리뷰이미지"></img>
-                <li class="list-group-item">설명
-                <p>여기에 내용이 들어갑니다</p>
-                </li>
-            </ul>
+<div id="review" class="review">
+    <div class="card" style="width: 50rem;">
+        <div class="card-header">
+            제목
         </div>
-    <div id="saved_comment" class="card" style="width: 50rem;">
-        <p>여기에 user_id가 들어갑니다</p>
-        <p>여기에 star가 들어갑니다</p>
-        <p>여기에 작성된 코멘트를 불러옵니다</p>
+        <ul class="list-group list-group-flush">
+            <img class="list-group-item" src="..." alt="리뷰이미지"></img>
+            <li class="list-group-item">설명
+                <p>여기에 내용이 들어갑니다</p>
+            </li>
+        </ul>
+    </div>
+    <div id="saved_comment" style="width: 50rem;">
+
+    </div>
+    <div id="edit_btn" class="edit_btn">
+        <button onclick="update_btn()">수정</button>
+        <button onclick="delete_btn()">삭제</button>
     </div>
     <div class="star_box">
         <div class="input-group mb-3">
-        <label class="input-group-text" for="inputGroupSelect01">별점</label>
-        <select class="form-select" id="star">
-            <option selected>-- 선택하기 --</option>
-            <option value="1">⭐</option>
-            <option value="2">⭐⭐</option>
-            <option value="3">⭐⭐⭐</option>
-            <option value="4">⭐⭐⭐⭐</option>
-            <option value="5">⭐⭐⭐⭐⭐</option>
-        </select>
+            <label class="input-group-text" for="inputGroupSelect01">별점</label>
+            <select class="form-select" id="star">
+                <option selected>선택하기</option>
+                <option value="1">⭐</option>
+                <option value="2">⭐⭐</option>
+                <option value="3">⭐⭐⭐</option>
+                <option value="4">⭐⭐⭐⭐</option>
+                <option value="5">⭐⭐⭐⭐⭐</option>
+            </select>
         </div>
     </div>
     <div class="comment_input">
