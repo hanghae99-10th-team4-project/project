@@ -15,14 +15,20 @@ def home():
 
 @app.route('/index_lsy')
 def home_lsy():
-    return render_template('index_lsy.html')
+    return render_template('review_page.html')
 
 @app.route("/api/walk", methods=["GET"]) #walk doc 가져오기
 def review_get():
     review_give = list(db.walk.find({},{'_id':False}))
+
+    return jsonify({'review': review_give})
+
+@app.route("/api/walk/comment", methods=["GET"]) #walk doc 가져오기
+def comment_get():
+
     comment_give = list(db.walk_comment.find({},{'_id':False}))
 
-    return jsonify({'review': review_give}, {'comment': comment_give})
+    return jsonify({'comment': comment_give})
 
 @app.route("/api/walk/comment", methods=["POST"]) #코멘트 저장하기
 def comment_post():

@@ -20,22 +20,44 @@
     <title>나만의 산책길</title>
 </head>
 <style>
+    *{
+            font-family: 'Do Hyeon', sans-serif;
+        }
+        a{
+            color:white;
+            text-decoration: none;
+        }
+        header{
+            width: 100%;
+            height: 500px;
 
-    .mypic {
-        width: 100%;
-        height: 400px;
+            background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://img.freepik.com/premium-vector/people-walk-in-springtime-park-flat-color-illustration_151150-5198.jpg?w=1060');
+            background-position: center 30%;
+            background-size: cover;
 
-        background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjEwMTBfMjY1%2FMDAxNjY1MzcxMzgyNTg2.KLAe4Vm5xndozo1MOkH13U4LW-yjK9Lo8cpkEsa-r7Ag.On8c83cVpaf2qQQ9Eeqk-Fd1VKceNUZ64Way5LhPyHkg.JPEG.shinae90%2F20220920%25A3%25DF135146.jpg&type=sc960_832');
-        background-position: center 50%;
-        background-size: cover;
+            color: white;
+        }
+        nav{
+            width:100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+        nav>p{
+            width:15%;
+            display: block;
+            text-align: center;
+            padding-top:0.5%;
 
-        color: white;
+        }
+        .cover{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
 
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-    }
+            margin-top:200px;
+        }
 
     .review {
         display: flex;
@@ -69,8 +91,9 @@
 <script>
     let post_id_receive = sessionStorage.getItem("post_id")
     console.log(post_id_receive)
-    $(document).ready(function () {
+/*    $(document).ready(function () {
         show_review();
+        show_comment();
     })
 
     function show_review() {
@@ -89,9 +112,7 @@
                     review = rows[i]['review']
                     img = rows[i]['img']
                     category = rows[i]['category']
-                    comment_id = rows[i]['comment_id']
-                    comment = rows[i]['comment']
-                    star = rows[i]['star']
+
 
                     if(post_id == post_id_receive) {
                     let temp_html = `<div class="card" style="width: 50rem;">
@@ -111,7 +132,37 @@
             }
         })
     }
+    function show_comment() {
+        $('#saved_comment').empty()
+        $.ajax({
+            type: "GET",
+            url: "/api/walk/comment",
+            data: {},
+            success: function (response) {
+                let rows = response['comment']
 
+                for( i=0; i < rows.length; i++) {
+                    post_id = rows[i]['post_id']
+                    user_id = rows[i]['user_id']
+                    comment_id = rows[i]['comment_id']
+                    comment = rows[i]['comment']
+                    star = rows[i]['star']
+
+                    if(post_id == post_id_receive){
+                        let temp_html = `<div id="saved_comment" class="card" style="width: 50rem;">
+                                            <p>${user_id}</p>
+                                            <p>${star}</p>
+                                            <p>${comment}</p>
+                                        </div>`
+                        $('#saved_comment').append(temp_html)
+                    }
+                }
+
+
+            }
+        })
+    }
+*/
     function save_comment() {
         let comment = $('comment').val()
         let post_id = post_id_receive
@@ -131,10 +182,16 @@
 
 </script>
 <body>
-    <div class="mypic">
-        <h1>나만의 산책길</h1>
-        <h5>나만 아는 우리동네 산책길</h5>
+<header>
+    <nav>
+        <p class="home"><a href="/api/main">WALK</a></p>
+        <p class="logout"  onclick="logout()"> LOGOUT</p>
+    </nav>
+    <div class="cover">
+        <h1>동네길</h1>
+        <h6> 나만의 동네산책길을 공유하세요</h6>
     </div>
+</header>
     <div id="review" class="review">
         <div class="card" style="width: 50rem;">
             <div class="card-header">
@@ -147,6 +204,11 @@
                 </li>
             </ul>
         </div>
+    <div id="saved_comment" class="card" style="width: 50rem;">
+        <p>여기에 user_id가 들어갑니다</p>
+        <p>여기에 star가 들어갑니다</p>
+        <p>여기에 작성된 코멘트를 불러옵니다</p>
+    </div>
     <div class="star_box">
         <div class="input-group mb-3">
         <label class="input-group-text" for="inputGroupSelect01">별점</label>
